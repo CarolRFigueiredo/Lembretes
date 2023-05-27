@@ -1,4 +1,5 @@
-﻿using Lembretes.Domain.Entities;
+﻿using Lembretes.Domain.Dto;
+using Lembretes.Domain.Entities;
 using Lembretes.Domain.Interfaces;
 
 namespace Lembretes.Service.Services
@@ -33,9 +34,47 @@ namespace Lembretes.Service.Services
             }
         }
 
-        public List<Lembrete> List()
+        public List<LembreteResponse> List()
         {
-            return _lembretesRepository.List();
+            var lembretes = _lembretesRepository.List().OrderBy(x => x.Date).ToList();
+
+            return ConverterLembreteToLembrateResponse(lembretes);
+        }
+
+        private List<LembreteResponse> ConverterLembreteToLembrateResponse(List<Lembrete> lembretes)
+        {
+            List<LembreteResponse> lembretesResponse = new List<LembreteResponse>();
+
+            lembretes.ForEach(x => 
+            {
+                var lembreteResponse = lembretesResponse.Find(y => y.Date == x.Date);
+
+                if (lembreteResponse == null)
+                {
+                    lembretesResponse.Add(new LembreteResponse
+                    {
+                        Date = x.Date,
+                        Eventos = new List<Evento>
+                        {
+                            new Evento
+                            {
+                                Id = x.Id,
+                                Nome = x.Nome
+                            }
+                        }
+                    });
+                }
+                else 
+                {
+                    lembreteResponse.Eventos.Add(new Evento
+                    {
+                        Id = x.Id, 
+                        Nome = x.Nome
+                    });
+                }
+            });
+
+            return lembretesResponse;
         }
 
         private static bool ValidarLembrete(Lembrete lembrete)
