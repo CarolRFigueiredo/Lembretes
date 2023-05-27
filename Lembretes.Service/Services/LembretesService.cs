@@ -16,6 +16,7 @@ namespace Lembretes.Service.Services
         {
             if (ValidarLembrete(lembrete))
             {
+                lembrete.Date = lembrete.Date.Date;
                 return _lembretesRepository.Create(lembrete);
             }
 

@@ -1,0 +1,31 @@
+{
+  "Version": 1,
+  "ProjectMap": {
+    "68b42320-cc93-42f2-a096-ace1ac4cbad0": {
+      "ProjectGuid": "68b42320-cc93-42f2-a096-ace1ac4cbad0",
+      "DisplayName": "Lembretes.Api",
+      "ColorIndex": 0
+    },
+    "48a8e3d1-2a31-4381-b911-f662073d6088": {
+      "ProjectGuid": "48a8e3d1-2a31-4381-b911-f662073d6088",
+      "DisplayName": "Lembretes.Service",
+      "ColorIndex": 1
+    },
+    "5d4f6526-4a58-420e-80ab-1781da514536": {
+      "ProjectGuid": "5d4f6526-4a58-420e-80ab-1781da514536",
+      "DisplayName": "Lembretes.Domain",
+      "ColorIndex": 2
+    },
+    "61101e4d-c513-4a19-9111-e85a8569d563": {
+      "ProjectGuid": "61101e4d-c513-4a19-9111-e85a8569d563",
+      "DisplayName": "Lembretes.Infra.Data",
+      "ColorIndex": 3
+    },
+    "a2fe74e1-b743-11d0-ae1a-00a0c90fffc3": {
+      "ProjectGuid": "a2fe74e1-b743-11d0-ae1a-00a0c90fffc3",
+      "DisplayName": "Arquivos Diversos",
+      "ColorIndex": -1
+    }
+  },
+  "NextColorIndex": 4
+}
