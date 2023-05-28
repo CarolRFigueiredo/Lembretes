@@ -41,6 +41,37 @@ namespace Lembretes.Service.Services
             return ConverterLembreteToLembrateResponse(lembretes);
         }
 
+        public LembreteResponse? GetById(Guid id)
+        {
+            var lembrete = _lembretesRepository.SearchById(id);
+
+            if (lembrete == null)
+            {
+                return null;
+            }
+
+            LembreteResponse lembreteResponse = ConverterLembreteToLembreteResponse(lembrete);
+
+            return lembreteResponse;
+        }
+
+        private LembreteResponse ConverterLembreteToLembreteResponse(Lembrete? lembrete)
+        {
+            LembreteResponse lembreteResponse = new LembreteResponse();
+
+            lembreteResponse.Date = lembrete.Date;
+            lembreteResponse.Eventos = new List<Evento>
+            {
+                new Evento
+                {
+                    Id = lembrete.Id,
+                    Nome = lembrete.Nome
+                }
+            };
+
+            return lembreteResponse;
+        }
+
         private List<LembreteResponse> ConverterLembreteToLembrateResponse(List<Lembrete> lembretes)
         {
             List<LembreteResponse> lembretesResponse = new List<LembreteResponse>();

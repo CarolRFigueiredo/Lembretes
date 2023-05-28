@@ -8,5 +8,6 @@ namespace Lembretes.Domain.Interfaces
         public Guid Create(Lembrete lembrete);
         public List<LembreteResponse> List();
         public void Delete(Guid id);
+        public LembreteResponse? GetById(Guid id);
     }
 }

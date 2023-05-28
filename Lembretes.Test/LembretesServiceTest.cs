@@ -5,6 +5,7 @@ using Lembretes.Service.Services;
 using Moq;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Xunit;
 
 namespace Lembretes.Test
@@ -137,6 +138,42 @@ namespace Lembretes.Test
 
             Assert.NotNull(response);
             Assert.Equal(3, response.Count);
+        }
+
+        [Fact]
+        public void Get_ValidLembrete_ShouldReturnOk()
+        {
+            var lembrete = new Lembrete
+            {
+                Date = DateTime.Now.AddDays(1),
+                Nome = "Teste Criacao"
+            };
+
+            lembrete.SetId();
+
+            var mockLembreteRepository = new Mock<ILembretesRepository>();
+            mockLembreteRepository.Setup(x => x.SearchById(lembrete.Id)).Returns(lembrete);
+          
+            var lembreteResponse = new LembretesService(mockLembreteRepository.Object).GetById(lembrete.Id);
+
+            Assert.NotNull(lembreteResponse);
+            Assert.Equal(lembrete.Date, lembreteResponse.Date);
+            Assert.Equal(lembrete.Nome, lembreteResponse.Eventos.ToList().First().Nome);
+            Assert.Equal(lembrete.Id, lembreteResponse.Eventos.ToList().First().Id);
+        }
+
+
+        [Fact]
+        public void Get_InvalidLembrete_ShouldReturnNull()
+        {
+            Guid id = Guid.NewGuid();
+
+            var mockLembreteRepository = new Mock<ILembretesRepository>();
+            mockLembreteRepository.Setup(x => x.SearchById(id));
+
+            var lembreteResponse = new LembretesService(mockLembreteRepository.Object).GetById(id);
+
+            Assert.Null(lembreteResponse);
         }
     }
 }

@@ -21,6 +21,25 @@ namespace Lembretes.Api.Controllers
             return Ok(_lembreteService.List());
         }
 
+        [HttpGet("{id}")]
+        public IActionResult GetById(Guid id)
+        {
+            if (id == Guid.Empty)
+            {
+                return BadRequest();
+            }
+
+            var lembrete = _lembreteService.GetById(id);
+
+            if(lembrete == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(lembrete);
+                
+        }
+
         [HttpDelete("{id}")]
         public IActionResult Delete(Guid id) 
         {
