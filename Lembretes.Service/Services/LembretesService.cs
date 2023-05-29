@@ -55,7 +55,7 @@ namespace Lembretes.Service.Services
             return lembreteResponse;
         }
 
-        private LembreteResponse ConverterLembreteToLembreteResponse(Lembrete? lembrete)
+        private LembreteResponse ConverterLembreteToLembreteResponse(Lembrete lembrete)
         {
             LembreteResponse lembreteResponse = new LembreteResponse();
 
