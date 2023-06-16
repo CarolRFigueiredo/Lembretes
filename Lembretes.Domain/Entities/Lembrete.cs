@@ -10,5 +10,10 @@
         {
             Id = Guid.NewGuid();        
         }
+
+        public void SetId(Guid id)
+        {
+            Id = id;
+        }
     }
 }

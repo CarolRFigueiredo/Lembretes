@@ -55,6 +55,23 @@ namespace Lembretes.Service.Services
             return lembreteResponse;
         }
 
+        public Lembrete? PutById(Guid id, Lembrete lembrete)
+        {
+            var lembreteAntigo = _lembretesRepository.SearchById(id);
+
+            if (lembreteAntigo != null)
+            {
+                lembrete.SetId(id);
+
+                _lembretesRepository.Put(lembrete);
+
+                return lembrete;
+                    
+            }
+
+            return null;
+        }
+
         private LembreteResponse ConverterLembreteToLembreteResponse(Lembrete lembrete)
         {
             LembreteResponse lembreteResponse = new LembreteResponse();

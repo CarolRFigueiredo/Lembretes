@@ -30,6 +30,19 @@ namespace Lembretes.Infra.Data.Repositories
             return _lembretes;
         }
 
+        public Lembrete Put(Lembrete lembrete)
+        {
+            var lembreteAntigo = _lembretes.Find(x => x.Id == lembrete.Id);
+
+            if (lembreteAntigo != null)
+            {
+                _lembretes.Remove(lembreteAntigo);
+                _lembretes.Add(lembrete);
+            }
+
+             return lembrete;
+        }
+
         public Lembrete? SearchById(Guid id)
         {
             return _lembretes.Find(x => x.Id == id);

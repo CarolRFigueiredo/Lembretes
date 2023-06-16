@@ -9,5 +9,6 @@ namespace Lembretes.Domain.Interfaces
         public List<LembreteResponse> List();
         public void Delete(Guid id);
         public LembreteResponse? GetById(Guid id);
+        public Lembrete? PutById(Guid Id, Lembrete lembrete);
     }
 }

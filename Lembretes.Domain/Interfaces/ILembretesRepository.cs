@@ -8,5 +8,6 @@ namespace Lembretes.Domain.Interfaces
         public List<Lembrete> List();
         public void Delete(Lembrete lembrete);
         public Lembrete? SearchById(Guid id);
+        public Lembrete Put(Lembrete lembrete);
     }
 }
