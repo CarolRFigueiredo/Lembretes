@@ -13,9 +13,11 @@ builder.Services.AddSwaggerGen();
 
 //dependency injection - Services
 builder.Services.AddScoped<ILembretesService, LembretesService>();
+builder.Services.AddScoped<IPessoasService, PessoasService>();
 
 //dependency injection - Repositories
 builder.Services.AddSingleton<ILembretesRepository, LembretesRepository>();
+builder.Services.AddSingleton<IPessoasRepository, PessoasRepository>();
 
 var app = builder.Build();
 
