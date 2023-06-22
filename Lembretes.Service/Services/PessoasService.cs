@@ -9,10 +9,12 @@ namespace Lembretes.Service.Services
 	public class PessoasService : IPessoasService
 	{
         public readonly IPessoasRepository _pessoasRepository;
+        public readonly ILembretesRepository _lembretesRepository;
 
-        public PessoasService(IPessoasRepository pessoasRepository)
+        public PessoasService(IPessoasRepository pessoasRepository, ILembretesRepository lembretesRepository)
         {
             _pessoasRepository = pessoasRepository;
+            _lembretesRepository = lembretesRepository;
 		}
 
         public Guid Create(Pessoas pessoas)
@@ -25,7 +27,7 @@ namespace Lembretes.Service.Services
             return Guid.Empty;
         }
 
-        public Pessoas GetById(Guid id)
+        public PessoaResponse GetById(Guid id)
         {
             var pessoas = _pessoasRepository.SearchById(id);
 
@@ -34,13 +36,52 @@ namespace Lembretes.Service.Services
                 return null;
             }
 
-            return pessoas;
+            PessoaResponse pessoaResponse = ConverterPessoasToPessoaResponse(pessoas);
+
+            return pessoaResponse;
         }
 
-        private static bool ValidarPessoas(Pessoas pessoas)
+        private bool ValidarPessoas(Pessoas pessoas)
         {
-            return pessoas != null && pessoas.DataNascimento < DateTime.Now && !string.IsNullOrEmpty(pessoas.Nome);
-        } 
+            var resposta = pessoas != null && pessoas.DataNascimento < DateTime.Now && !string.IsNullOrEmpty(pessoas.Nome);
+
+            if (resposta == true && pessoas != null && pessoas.Lembretes != null)
+            {
+                pessoas.Lembretes.ForEach(x =>
+                {
+                    var lembrete = _lembretesRepository.SearchById(x);
+
+                    if(lembrete == null)
+                    {
+                        resposta = false;
+                    }
+                });
+            }
+
+            return resposta;
+        }
+
+        private PessoaResponse ConverterPessoasToPessoaResponse(Pessoas pessoas)
+        {
+            PessoaResponse pessoaResponse = new PessoaResponse();
+
+            pessoaResponse.Id = pessoas.Id;
+            pessoaResponse.Nome = pessoas.Nome;
+            pessoaResponse.DataNascimento = pessoas.DataNascimento;
+            pessoaResponse.Lembretes = new List<Lembrete>();
+
+            pessoas.Lembretes.ForEach(x =>
+            {
+                var lembrete = _lembretesRepository.SearchById(x);
+
+                if(lembrete != null)
+                {
+                    pessoaResponse.Lembretes.Add(lembrete);
+                }
+            });
+
+            return pessoaResponse;
+        }
     }
 }
 

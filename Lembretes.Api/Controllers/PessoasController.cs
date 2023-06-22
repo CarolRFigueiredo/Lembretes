@@ -38,14 +38,14 @@ namespace Lembretes.Api.Controllers
                 return BadRequest();
             }
 
-            var lembrete = _pessoasService.GetById(id);
+            var pessoa = _pessoasService.GetById(id);
 
-            if (lembrete == null)
+            if (pessoa == null)
             {
                 return NotFound();
             }
 
-            return Ok(lembrete);
+            return Ok(pessoa);
 
         }
     }        
