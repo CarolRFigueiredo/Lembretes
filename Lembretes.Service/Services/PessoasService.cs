@@ -41,6 +41,22 @@ namespace Lembretes.Service.Services
             return pessoaResponse;
         }
 
+        public Pessoas? PutById(Guid id, Pessoas pessoas)
+        {
+            var pessoaAntiga = _pessoasRepository.SearchById(id);
+
+            if (pessoaAntiga != null)
+            {
+                pessoas.SetId(id);
+
+                pessoas = _pessoasRepository.Put(pessoas);
+
+                return pessoas;
+            }
+
+            return null;
+        }
+
         private bool ValidarPessoas(Pessoas pessoas)
         {
             var resposta = pessoas != null && pessoas.DataNascimento < DateTime.Now && !string.IsNullOrEmpty(pessoas.Nome);

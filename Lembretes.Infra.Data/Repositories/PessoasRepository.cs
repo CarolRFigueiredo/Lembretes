@@ -21,6 +21,21 @@ namespace Lembretes.Infra.Data.Repositories
             return pessoas.Id;
         }
 
+        public Pessoas Put(Pessoas pessoas)
+        {
+            var pessoaAntiga = _pessoas.Find(x => x.Id == pessoas.Id);
+           
+            if(pessoaAntiga != null)
+            {
+                _pessoas.Remove(pessoaAntiga);
+                _pessoas.Add(pessoas);
+
+                return pessoas;
+            }
+
+            return null;
+        }
+
         public Pessoas SearchById(Guid id)
         {
             return _pessoas.Find(x => x.Id == id);
