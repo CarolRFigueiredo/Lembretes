@@ -45,7 +45,7 @@ namespace Lembretes.Service.Services
         {
             var pessoaAntiga = _pessoasRepository.SearchById(id);
 
-            if (pessoaAntiga != null)
+            if (pessoaAntiga != null && ValidarPessoas(pessoas))
             {
                 pessoas.SetId(id);
 
