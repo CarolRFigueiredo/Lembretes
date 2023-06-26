@@ -7,7 +7,7 @@ namespace Lembretes.Domain.Interfaces
 	{
         public Guid Create(Pessoas pessoas);
         public Pessoas SearchById(Guid id);
-
+        public Pessoas Put(Pessoas pessoas);
     }
 }
 

@@ -9,7 +9,7 @@ namespace Lembretes.Api.Controllers
     [ApiController]
     [Route("api/v1/[controller]")]
     public class PessoasController : Controller
-	{
+    {
         public readonly IPessoasService _pessoasService;
 
         public PessoasController(IPessoasService pessoasService)
@@ -47,6 +47,24 @@ namespace Lembretes.Api.Controllers
 
             return Ok(pessoa);
 
+        }
+
+        [HttpPut("{id}")]
+        public IActionResult Put(Guid id, [FromBody] Pessoas pessoas)
+        {
+            if (id == Guid.Empty)
+            {
+                return BadRequest();
+            }
+
+            var pessoaNova = _pessoasService.PutById(id, pessoas);
+
+            if (pessoaNova == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(pessoaNova);
         }
     }        
 }

@@ -8,6 +8,11 @@ namespace Lembretes.Domain.Entities
 		public DateTime DataNascimento { get; set; }
 		public List<Guid> Lembretes { get; set; }
 
+		public void SetId(Guid id)
+		{
+			Id = id;
+		}
+
 		public void SetId()
 		{
 			Id = Guid.NewGuid();
