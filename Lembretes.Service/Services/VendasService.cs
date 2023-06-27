@@ -1,4 +1,5 @@
 ﻿using System;
+using Lembretes.Domain.Dto;
 using Lembretes.Domain.Entities;
 using Lembretes.Domain.Interfaces;
 using Lembretes.Infra.Data.Repositories;
@@ -33,6 +34,34 @@ namespace Lembretes.Service.Services
             }
 
             return Guid.Empty;
+        }
+
+        public Vendas? GetById(Guid id)
+        {
+            var vendas = _vendasRepository.SearchById(id);
+
+            if (vendas == null)
+            {
+                return null;
+            }
+
+            return vendas;
+        }
+
+        public Vendas? PutById(Guid id, Vendas vendas)
+        {
+            var vendasAntiga = _vendasRepository.SearchById(id);
+
+            if (vendasAntiga != null && ValidarVendas(vendas) && ValidarVendedor(vendas.Vendedor))
+            {
+                vendas.SetId(id);
+
+                vendas = _vendasRepository.Put(vendas);
+
+                return vendas;
+            }
+
+            return null;
         }
 
         private bool ValidarVendas(Vendas vendas)

@@ -11,6 +11,7 @@ namespace Lembretes.Api.Controllers
     public class VendasController : Controller
     {
         public readonly IVendasService _vendasService;
+        private object _vendaService;
 
         public VendasController(IVendasService vendasService)
         {
@@ -28,6 +29,42 @@ namespace Lembretes.Api.Controllers
             }
 
             return Ok(id);
+        }
+
+        [HttpGet("{id}")]
+        public IActionResult GetById(Guid id)
+        {
+            if (id == Guid.Empty)
+            {
+                return BadRequest();
+            }
+
+            var vendas = _vendasService.GetById(id);
+
+            if (vendas == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(vendas);
+        }
+
+        [HttpPut("{id}")]
+        public IActionResult Put(Guid id, [FromBody] Vendas vendas)
+        {
+            if (id == Guid.Empty)
+            {
+                return BadRequest();
+            }
+
+            var vendaNova = _vendasService.PutById(id, vendas);
+
+            if (vendaNova == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(vendaNova);
         }
     }
 }

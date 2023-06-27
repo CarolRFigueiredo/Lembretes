@@ -20,6 +20,23 @@ namespace Lembretes.Infra.Data.Repositories
 
             return vendas.Id;
         }
+        public Vendas? SearchById(Guid id)
+        {
+            return _vendas.Find(x => x.Id == id);
+        }
+
+        public Vendas Put(Vendas vendas)
+        {
+            var vendasAntiga = _vendas.Find(x => x.Id == vendas.Id);
+
+            if (vendasAntiga != null)
+            {
+                _vendas.Remove(vendasAntiga);
+                _vendas.Add(vendas);
+            }
+
+            return vendas;
+        }
     }
 }
 

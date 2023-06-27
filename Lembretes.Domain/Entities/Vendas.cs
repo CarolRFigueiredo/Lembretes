@@ -17,6 +17,11 @@ namespace Lembretes.Domain.Entities
             Status = StatusVendas.AguardandoPagamento;
             Date = DateTime.Now;
         }
+
+        public void SetId(Guid id)
+        {
+            Id = id;
+        }
     }
 }
 
