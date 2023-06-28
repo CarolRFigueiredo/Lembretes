@@ -9,6 +9,7 @@ namespace Lembretes.Domain.Interfaces
         public Guid Create(Vendas vendas);
         public Vendas? GetById(Guid id);
         public Vendas? PutById(Guid Id, Vendas vendas);
+        public Vendas? PatchById(Guid Id, StatusVendas statusVendas);
     }
 }
 

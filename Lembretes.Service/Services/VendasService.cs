@@ -10,6 +10,7 @@ namespace Lembretes.Service.Services
     {
 
         public readonly IVendasRepository _vendasRepository;
+        private object _statusVendasRepository;
 
         public VendasService(IVendasRepository vendasRepository)
         {
@@ -64,6 +65,25 @@ namespace Lembretes.Service.Services
             return null;
         }
 
+        public Vendas? PatchById(Guid id, StatusVendas statusVendas)
+        {
+            var vendaAntiga = _vendasRepository.SearchById(id);
+
+            if (vendaAntiga != null)
+            {
+                if(ValidarStatus(statusVendas, vendaAntiga))
+                {
+                    vendaAntiga.SetStatus(statusVendas);
+
+                    var vendas = _vendasRepository.Put(vendaAntiga);
+
+                    return vendas;
+                }
+            }
+
+            return null;
+        }
+
         private bool ValidarVendas(Vendas vendas)
         {
             if (vendas.Date <= DateTime.Now && vendas.Itens != null && vendas.Itens.Count >= 1)
@@ -83,6 +103,26 @@ namespace Lembretes.Service.Services
 
 
             return false;
+        }
+
+        private bool ValidarStatus(StatusVendas statusVendas, Vendas vendas)
+        {
+            if (vendas.Status == StatusVendas.AguardandoPagamento && (statusVendas == StatusVendas.Cancelado || statusVendas == StatusVendas.PagamentoAprovado))
+            {
+                return true;
+            }
+            else if(vendas.Status == StatusVendas.PagamentoAprovado && (statusVendas == StatusVendas.EnviadoParaTransportadora || statusVendas == StatusVendas.Cancelado))
+            {
+                return true;
+            }
+            else if(vendas.Status == StatusVendas.EnviadoParaTransportadora && statusVendas == StatusVendas.Entregue)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }   
         }
 
     } 

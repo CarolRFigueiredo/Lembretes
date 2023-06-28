@@ -66,5 +66,24 @@ namespace Lembretes.Api.Controllers
 
             return Ok(vendaNova);
         }
+
+
+        [HttpPatch("{id}/Status")]
+        public IActionResult PatchStatus(Guid id, [FromBody] StatusVendas statusVendas)
+        {
+            if (id == Guid.Empty)
+            {
+                return BadRequest();
+            }
+
+            var venda = _vendasService.PatchById(id, statusVendas);
+
+            if (venda != null)
+            {
+                return Ok(venda);
+            }
+
+            return NotFound();
+        }
     }
 }

@@ -22,6 +22,11 @@ namespace Lembretes.Domain.Entities
         {
             Id = id;
         }
+
+        public void SetStatus(StatusVendas statusVendas)
+        {
+            Status = statusVendas;
+        }
     }
 }
 
