@@ -8,6 +8,7 @@ namespace Lembretes.Domain.Interfaces
         public Guid Create(Vendas vendas);
         public Vendas? SearchById(Guid id);
         public Vendas Put(Vendas vendas);
+        public void Delete(Vendas vendas);
     }
 }
 

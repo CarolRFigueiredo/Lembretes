@@ -10,6 +10,7 @@ namespace Lembretes.Domain.Interfaces
         public Vendas? GetById(Guid id);
         public Vendas? PutById(Guid Id, Vendas vendas);
         public Vendas? PatchById(Guid Id, StatusVendas statusVendas);
+        public void Delete(Guid id);
     }
 }
 
