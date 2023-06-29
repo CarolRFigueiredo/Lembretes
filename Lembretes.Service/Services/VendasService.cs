@@ -84,6 +84,16 @@ namespace Lembretes.Service.Services
             return null;
         }
 
+        public void Delete(Guid id)
+        {
+            Vendas? vendas = _vendasRepository.SearchById(id);
+
+            if (vendas != null && vendas.Status == StatusVendas.Cancelado)
+            {
+                _vendasRepository.Delete(vendas);
+            }
+        }
+
         private bool ValidarVendas(Vendas vendas)
         {
             if (vendas.Date <= DateTime.Now && vendas.Itens != null && vendas.Itens.Count >= 1)

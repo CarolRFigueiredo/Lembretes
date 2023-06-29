@@ -37,6 +37,11 @@ namespace Lembretes.Infra.Data.Repositories
 
             return vendas;
         }
+
+        public void Delete(Vendas vendas)
+        {
+            _vendas.Remove(vendas);
+        }
     }
 }
 

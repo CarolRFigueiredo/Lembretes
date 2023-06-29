@@ -85,5 +85,18 @@ namespace Lembretes.Api.Controllers
 
             return NotFound();
         }
+
+        [HttpDelete("{id}")]
+        public IActionResult Delete(Guid id)
+        {
+            if (id == Guid.Empty)
+            {
+                return BadRequest();
+            }
+
+            _vendasService.Delete(id);
+
+            return Ok();
+        }
     }
 }
